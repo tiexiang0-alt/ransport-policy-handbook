@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>城市交通政策 - 手帐笔记版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Indie+Flower&family=Shadows+Into+Light&family=Inter:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --paper: #ffffff;
+            --ink: #334155;
+            --pink: #fbcfe8;
+            --blue: #bae6fd;
+            --yellow: #fef08a;
+            --green: #bbf7d0;
+            --purple: #e9d5ff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #e2e8f0;
+            background-image:
+                linear-gradient(rgba(203, 213, 225, 0.4) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(203, 213, 225, 0.4) 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: 'Klee One', 'STKaiti', serif;
+            color: var(--ink);
+            padding: 30px 15px;
+            margin: 0;
+        }
+
+        /* ===== 笔记本容器 ===== */
+        .notebook {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--paper);
+            border-radius: 8px;
+            box-shadow: 12px 12px 0 rgba(148, 163, 184, 0.25), 0 20px 40px rgba(0, 0, 0, 0.12);
+            position: relative;
+            border-left: 45px solid #f1f5f9;
+            overflow: visible;
+        }
+
+        /* 螺旋环 */
+        .rings {
+            position: absolute;
+            left: -32px;
+            top: 30px;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            z-index: 20;
+        }
+
+        .ring {
+            width: 55px;
+            height: 16px;
+            background: linear-gradient(145deg, #c8d0da, #9ca8b8);
+            border-radius: 12px;
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25), inset -1px -1px 3px rgba(255, 255, 255, 0.4);
+        }
+
+        /* 内容区 */
+        .page {
+            padding: 50px 45px 50px 55px;
+            background-image: radial-gradient(#dfe4ea 1.2px, transparent 1.2px);
+            background-size: 30px 30px;
+        }
+
+        /* ===== 标题 ===== */
+        .title {
+            font-family: 'Shadows Into Light', cursive;
+            font-size: 2.8rem;
+            text-align: center;
+            color: #db2777;
+            margin: 0 0 10px 0;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+
+        /* ===== 磁带播放器 ===== */
+        .tape-player {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 35px;
+        }
+
+        .tape {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid #334155;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .tape:hover {
+            background: #334155;
+            transform: scale(1.03);
+        }
+
+        .tape .spool {
+            width: 14px;
+            height: 14px;
+            border: 2px dashed #64748b;
+            border-radius: 50%;
+        }
+
+        .tape.playing .spool {
+            animation: spin 1.5s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ===== 主图 ===== */
+        .hero {
+            border: 6px solid white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .hero img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.65));
+            padding: 30px 20px 15px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ===== 和纸胶带 ===== */
+        .tape-deco {
+            height: 28px;
+            width: 120px;
+            margin: 0 auto 15px;
+            border-radius: 2px;
+            opacity: 0.7;
+            border-left: 2px dashed rgba(255, 255, 255, 0.5);
+            border-right: 2px dashed rgba(255, 255, 255, 0.5);
+        }
+
+        /* ===== 学习卡片 ===== */
+        .card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+            padding: 28px;
+            margin-bottom: 35px;
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.015);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .eng {
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.5rem;
+            color: #1e40af;
+            line-height: 1.35;
+            margin-bottom: 14px;
+        }
+
+        .mark-y {
+            background: var(--yellow);
+            padding: 1px 5px;
+            border-radius: 3px;
+        }
+
+        .mark-p {
+            background: var(--pink);
+            padding: 1px 5px;
+            border-radius: 3px;
+        }
+
+        .mark-g {
+            background: var(--green);
+            padding: 1px 5px;
+            border-radius: 3px;
+        }
+
+        .mark-b {
+            background: var(--blue);
+            padding: 1px 5px;
+            border-radius: 3px;
+        }
+
+        /* ===== 便利贴 ===== */
+        .post-it {
+            background: #fef9c3;
+            border: 1px solid #fde047;
+            padding: 16px;
+            box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.06);
+            transform: rotate(2deg);
+            border-bottom-right-radius: 40px 8px;
+            font-size: 0.88rem;
+        }
+
+        /* ===== 拍立得 ===== */
+        .photo {
+            background: white;
+            padding: 10px 10px 30px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #eee;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .photo:hover {
+            transform: scale(1.04) rotate(0deg) !important;
+            z-index: 10;
+        }
+
+        .photo img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        /* ===== 手写注解 ===== */
+        .note-box {
+            border-left: 3px solid #cbd5e1;
+            background: #f8fafc;
+            padding: 10px 14px;
+            margin-top: 14px;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+
+        /* ===== 语法卡 ===== */
+        .grammar-card {
+            background: #eff6ff;
+            border: 1px dashed #93c5fd;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-top: 14px;
+        }
+
+        /* ===== 逻辑图 ===== */
+        .logic-box {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 16px;
+            padding: 35px;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .logic-box .stamp {
+            width: 70px;
+            height: 70px;
+            border: 3px double #ef4444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ef4444;
+            font-weight: 700;
+            font-size: 1rem;
+            transform: rotate(-12deg);
+            position: absolute;
+            right: 25px;
+            bottom: 25px;
+            opacity: 0.5;
+        }
+
+        /* ===== 标签 ===== */
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 0.72rem;
+            color: #64748b;
+            margin-right: 4px;
+        }
+
+        /* ===== 分隔线 ===== */
+        .divider {
+            border: none;
+            border-top: 2px dashed #e2e8f0;
+            margin: 35px 0;
+        }
+
+        /* ===== 移动端 ===== */
+        @media (max-width: 768px) {
+            .notebook {
+                border-left: 12px solid #f1f5f9;
+            }
+
+            .rings {
+                display: none;
+            }
+
+            .page {
+                padding: 30px 18px;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .eng {
+                font-size: 1.2rem;
+            }
+
+            .hero img {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="notebook">
+        <!-- 螺旋环 -->
+        <div class="rings">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+        </div>
+
+        <div class="page">
+
+            <!-- ====== 标题区 ====== -->
+            <h1 class="title">Transportation Policy Study</h1>
+            <p class="subtitle">📚 Urban Transit · Policy Analysis · Vocabulary Notes</p>
+
+            <!-- 磁带播放器 -->
+            <div class="tape-player">
+                <div class="tape" id="tape-btn">
+                    <div class="spool"></div>
+                    <span>▶ AUDIO GUIDE</span>
+                    <div class="spool"></div>
+                </div>
+                <audio id="audio" src="audio/voiceover.wav"></audio>
+            </div>
+
+            <!-- ====== 主视觉图 ====== -->
+            <div class="hero card show">
+                <img src="images/hero.png" alt="Urban Traffic">
+                <div class="hero-caption">
+                    <p class="text-xs font-bold uppercase tracking-widest" style="color:#f9a8d4;">Phase 1 · Observation
+                    </p>
+                    <p class="text-xl font-bold mt-1">Urban Mobility Dynamics</p>
+                </div>
+            </div>
+
+            <!-- ====== 第一段：导言 ====== -->
+            <div class="tape-deco" style="background:var(--blue);"></div>
+            <div class="card" id="c1">
+                <p class="eng">"While Alice and Bob present valid points, I approach this issue from a different
+                    perspective based on my observations of Asian metropolitan areas."</p>
+                <p class="mt-3 leading-relaxed">
+                    <strong class="text-pink-600">💡 解析：</strong>
+                    作者使用了经典的 <span class="mark-p italic">"While..."</span> 让步句式——先礼后兵，肯定对方观点后引出自己基于
+                    <span class="underline decoration-wavy decoration-blue-400">Asian metropolitan
+                        areas</span>（亚洲大都市）的独特视角。这在 TOEFL/GRE 学术写作中是高分套路。
+                </p>
+                <div class="note-box">
+                    📝 "Asian metropolitan areas" 通常指东京、新加坡、香港等高密度、高公共交通覆盖率的城市。这种限定语可以增强论证的针对性和可信度。
+                </div>
+            </div>
+
+            <!-- ====== 第二段：核心论点 ====== -->
+            <div class="tape-deco" style="background:var(--pink);"></div>
+            <div class="card" id="c2">
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- 正文 -->
+                    <div class="flex-1">
+                        <p class="eng text-pink-700">"Rather than offering blanket free transit, a more effective
+                            strategy is to raise the cost of driving."</p>
+                        <p class="mt-2 text-lg font-bold">🎯 核心论点聚焦</p>
+                        <p class="mt-2 leading-relaxed italic border-l-4 border-pink-300 pl-4 text-slate-600">
+                            与其搞那种"撒胡椒面"式的全民免费交通，不如精准打击——<span class="mark-y">提高私人驾车成本</span>。
+                            这里 <strong>"Blanket"</strong> 用得极妙，暗示政策像毯子一样盖住所有人，却模糊了重点。
+                        </p>
+                        <div class="note-box">
+                            🔍 逻辑链：高驾驶成本 → 抑制非必要出行 → 缓解拥堵 → 产生税收 → 反哺公交基础设施
+                        </div>
+                        <div class="grammar-card mt-4">
+                            <strong class="text-blue-700">📖 语法加油站</strong><br>
+                            <span class="font-bold underline">Rather than + Doing / Noun</span> = 与其...不如...<br>
+                            <span class="text-slate-500 text-xs">e.g. Rather than giving fish, teach them how to
+                                fish.</span>
+                        </div>
+                    </div>
+                    <!-- 便利贴 -->
+                    <div class="w-full md:w-56 shrink-0">
+                        <div class="post-it">
+                            <strong class="text-pink-700">📌 Key Vocabulary</strong>
+                            <ul class="mt-2 space-y-2 text-sm">
+                                <li>• <strong class="mark-y">Blanket</strong>：覆盖全员的 / 一刀切的</li>
+                                <li>• <strong class="mark-y">Effective</strong>：有效的（核心评价词）</li>
+                                <li>• <strong class="mark-y">Strategy</strong>：策略</li>
+                                <li>• <strong class="mark-y">Deter</strong>：抑制、阻止</li>
+                            </ul>
+                            <p class="mt-3 text-xs italic text-gray-400">Ref: Urban Economics 101</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== 第三段：案例分析 ====== -->
+            <div class="tape-deco" style="background:var(--green);"></div>
+            <div class="card" id="c3">
+                <p class="eng">"Cities like Tokyo and Singapore have successfully implemented this by increasing
+                    consumption taxes or gasoline prices, which deters excessive automobile use while generating revenue
+                    to invest in public transit infrastructure."</p>
+                <p class="mt-3 leading-relaxed">
+                    东京和新加坡的成功秘诀：通过 <span class="mark-g">消费税</span> 或 <span class="mark-g">燃油价格调控</span> 来调节。
+                    通过加税/油价抑制需求并产生收入来投资基础设施。
+                </p>
+                <div class="mt-4 p-4 bg-green-50 rounded-lg border border-green-100 text-sm">
+                    <strong class="text-green-700">⚡ 双赢公式：</strong><br>
+                    抑制需求 (Deter) + 创造收入 (Generate Revenue) = 自给自足的公交系统 (Self-sustaining Transit)
+                </div>
+
+                <!-- 城市对比表 -->
+                <table class="w-full mt-5 text-sm border-collapse">
+                    <thead>
+                        <tr class="bg-green-50 text-green-800">
+                            <th class="text-left p-2 border border-green-100">🏙️ City</th>
+                            <th class="text-left p-2 border border-green-100">📋 Measure</th>
+                            <th class="text-left p-2 border border-green-100">💡 Effect</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-600">
+                        <tr>
+                            <td class="p-2 border border-green-50 font-bold">Singapore</td>
+                            <td class="p-2 border border-green-50">COE (购车配额) + ERP (电子收费)</td>
+                            <td class="p-2 border border-green-50">世界最低汽车保有率</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 border border-green-50 font-bold">Tokyo</td>
+                            <td class="p-2 border border-green-50">车位证明制度 + 高燃油税</td>
+                            <td class="p-2 border border-green-50">公交出行率超 60%</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 border border-green-50 font-bold">London</td>
+                            <td class="p-2 border border-green-50">拥堵费 (Congestion Charge)</td>
+                            <td class="p-2 border border-green-50">中心区车流减少 30%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- 拍立得照片区 -->
+                <div class="flex flex-wrap justify-center gap-5 mt-6">
+                    <div class="photo w-48" style="transform: rotate(-2deg);">
+                        <img src="images/tokyo.png" alt="Tokyo">
+                        <p>📸 Exhibit A: Tokyo</p>
+                    </div>
+                    <div class="photo w-48" style="transform: rotate(2deg);">
+                        <img src="images/singapore.png" alt="Singapore">
+                        <p>📸 Exhibit B: Singapore</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== 第四段：公平性 ====== -->
+            <div class="tape-deco" style="background:var(--blue);"></div>
+            <div class="card" id="c4">
+                <div class="flex flex-col md:flex-row gap-6 items-start">
+                    <div class="flex-1">
+                        <p class="eng">"To address the needs of low-income residents, as Alice mentioned, municipal
+                            governments can implement targeted subsidies or discounted fares for specific demographics,
+                            such as children, disabled individuals, students, and the elderly. This targeted approach,
+                            commonly seen in Europe and Australia, ensures equitable access without straining the
+                            overall municipal budget."</p>
+                        <p class="mt-3 leading-relaxed">
+                            如何平衡社会公平？作者提出了 <span class="mark-b text-blue-800 font-bold">Targeted Subsidies（定向补贴）</span>。
+                            不是让所有人免费，而是精准发放给最需要的群体。
+                        </p>
+                        <ul class="mt-3 space-y-2 text-slate-600">
+                            <li>✅ <strong>受益群体</strong>：儿童、残疾人、学生、老年人</li>
+                            <li>✅ <strong>财政效率</strong>：比全民免费节省大量政府支出</li>
+                            <li>✅ <strong>国际案例</strong>：借鉴欧洲和澳洲的成熟模式</li>
+                        </ul>
+                        <div class="note-box mt-4">
+                            📌 结论：公平并不意味着所有人免费，而是让最需要帮助的人得到最直接的支持，同时不给城市财政造成过重压力。
+                        </div>
+                    </div>
+                    <div class="w-full md:w-56 shrink-0">
+                        <img src="images/subsidy.png" class="rounded-lg shadow-lg border-4 border-white w-full"
+                            alt="Transit Card">
+                        <div class="mt-3 post-it" style="transform: rotate(-1deg);">
+                            <strong class="text-purple-700">💭 批判性思考</strong>
+                            <p class="mt-1 text-xs text-slate-600 leading-relaxed">
+                                "Targeted Subsidies" 虽然高效，但执行时如何精准核实受助者身份？这需要强大的数字化基础设施支撑。
+                            </p>
+                            <div class="mt-2">
+                                <span class="tag">Equity</span>
+                                <span class="tag">Digital ID</span>
+                                <span class="tag">Efficiency</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- ====== 逻辑流总结 ====== -->
+            <div class="logic-box card show">
+                <div class="tape-deco" style="background:var(--purple); margin-bottom: 20px;"></div>
+                <h3 class="text-2xl font-bold mb-6 text-purple-700">🧠 逻辑流复盘 (Logic Flow)</h3>
+
+                <div class="space-y-5">
+                    <div class="flex items-start gap-4">
+                        <div
+                            class="w-9 h-9 rounded-full bg-pink-500 text-white flex items-center justify-center shrink-0 shadow-md font-bold">
+                            1</div>
+                        <div>
+                            <p class="font-bold text-base">放弃 <span class="line-through text-gray-400">Blanket
+                                    Free</span>（全员免费）</p>
+                            <p class="text-sm text-gray-500">理由：财政压力大，资源错配，且对高收入群体也是无意义补贴。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div
+                            class="w-9 h-9 rounded-full bg-blue-500 text-white flex items-center justify-center shrink-0 shadow-md font-bold">
+                            2</div>
+                        <div>
+                            <p class="font-bold text-base text-blue-700">执行 <span
+                                    class="underline decoration-blue-300">Raise Driving Cost</span>（提高驾车成本）</p>
+                            <p class="text-sm text-gray-500">手段：燃油税、拥堵费 → 产生的收入反哺公共交通基础设施建设。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div
+                            class="w-9 h-9 rounded-full bg-green-500 text-white flex items-center justify-center shrink-0 shadow-md font-bold">
+                            3</div>
+                        <div>
+                            <p class="font-bold text-base text-green-700">配套 <span
+                                    class="underline decoration-green-300">Targeted Subsidies</span>（定向补贴弱势群体）</p>
+                            <p class="text-sm text-gray-500">对象：低收入群体、学生、老人、残疾人。确保基本出行权利。</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-5 bg-white rounded-xl border-2 border-purple-100 text-center shadow-sm">
+                        <p class="text-lg font-bold text-purple-800">🌟 Result: Sustainable + Equitable</p>
+                        <p class="text-sm text-purple-400 mt-1">（财政可持续 + 社会公平）</p>
+                    </div>
+                </div>
+                <div class="stamp">已复盘</div>
+            </div>
+
+            <!-- ====== 页脚 ====== -->
+            <div class="flex justify-between items-end mt-16 pt-6 border-t border-gray-100">
+                <div class="text-xs italic text-gray-400 leading-relaxed">
+                    Hand-crafted study notes<br>
+                    #UrbanPolicy #SustainableCities
+                </div>
+                <div class="flex gap-3 text-2xl opacity-20">
+                    <span>🚌</span><span>🚗</span><span>💰</span><span>🌱</span><span>🏙️</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // 滚动显示动画
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.card').forEach(c => obs.observe(c));
+
+        // 磁带播放器
+        const btn = document.getElementById('tape-btn');
+        const audio = document.getElementById('audio');
+        let playing = false;
+
+        btn.addEventListener('click', () => {
+            if (!playing) {
+                audio.play();
+                btn.classList.add('playing');
+                btn.querySelector('span').textContent = '⏸ PLAYING...';
+                playing = true;
+            } else {
+                audio.pause();
+                btn.classList.remove('playing');
+                btn.querySelector('span').textContent = '▶ AUDIO GUIDE';
+                playing = false;
+            }
+        });
+        audio.onended = () => {
+            btn.classList.remove('playing');
+            btn.querySelector('span').textContent = '▶ AUDIO GUIDE';
+            playing = false;
+        };
+    </script>
+</body>
+
+</html>
