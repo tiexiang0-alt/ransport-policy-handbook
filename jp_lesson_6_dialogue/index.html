@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第六课 背诵短文 2/4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+            background-color: #f8fafc;
+        }
+
+        ruby {
+            font-family: "Noto Sans JP", sans-serif;
+            font-size: 1.5rem;
+            margin-right: 0.1rem;
+        }
+
+        rt {
+            font-size: 0.75rem;
+            color: #8b5cf6;
+            /* 紫色注音，呼应Part2主题色 */
+            font-weight: 700;
+            transform: translateY(-2px);
+            transition: opacity 0.3s ease;
+        }
+
+        .hide-ruby rt {
+            opacity: 0;
+        }
+
+        .hide-cn .cn-text {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            margin-top: 0 !important;
+            transition: all 0.3s ease;
+        }
+
+        .cn-text {
+            opacity: 1;
+            max-height: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .hide-analysis .analysis-box {
+            display: none;
+        }
+
+        .sentence-card {
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #8b5cf6;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            background: #ffffff;
+            transition: all 0.2s ease;
+            position: relative;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .sentence-card:hover {
+            border-left-color: #7c3aed;
+            background: #faf5ff;
+            transform: translateX(4px);
+        }
+
+        .grammar-highlight {
+            color: #e11d48;
+            /* 红色高亮重点语法/陷阱 */
+            font-weight: bold;
+            border-bottom: 2px dashed #fda4af;
+        }
+
+        .analysis-box {
+            background-color: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-left: 4px solid #9ca3af;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .role-li {
+            background-color: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .role-sato {
+            background-color: #fce7f3;
+            color: #9f1239;
+        }
+
+        .footnote {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1rem;
+        }
+    </style>
+</head>
+
+<body class="text-slate-800 pb-20">
+
+    <!-- 顶部导航条 -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center text-purple-700 font-bold text-lg">
+                <i class="fa-solid fa-book-open mr-2"></i>
+                <span>第六课 语境背诵 2/4</span>
+            </div>
+            <div class="flex gap-2 flex-wrap justify-center">
+                <button id="toggleRubyBtn"
+                    class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-sm font-bold transition-colors">
+                    <i class="fa-solid fa-spell-check mr-1"></i> 隐藏假名
+                </button>
+                <button id="toggleCnBtn"
+                    class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-sm font-bold transition-colors">
+                    <i class="fa-solid fa-eye-slash mr-1"></i> 隐藏中文
+                </button>
+                <button id="toggleAnalysisBtn"
+                    class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-sm font-bold transition-colors">
+                    <i class="fa-solid fa-microscope mr-1"></i> 隐藏解析
+                </button>
+                <button onclick="playAll()"
+                    class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-full text-sm font-bold shadow-md transition-colors">
+                    <i class="fa-solid fa-play mr-1"></i> 播放全文
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 mt-8">
+
+        <header class="mb-8 border-b border-slate-200 pb-4">
+            <h1 class="text-3xl font-black text-slate-800 mb-2">职场寒暄与周末计划</h1>
+            <p class="text-slate-500 font-medium">课文属性：下班交际语、交通地名与副词陷阱综合对话</p>
+            <div class="mt-4 flex flex-wrap gap-2 text-xs">
+                <span
+                    class="bg-purple-50 text-purple-700 px-2 py-1 rounded border border-purple-200">目标词汇：箱根、新宿、フランス人、佐藤</span>
+                <span class="bg-rose-50 text-rose-700 px-2 py-1 rounded border border-rose-200">核心语法：まっすぐ、たしか、歩いて
+                    (无で)、お先に失礼します</span>
+            </div>
+        </header>
+
+        <!-- 课文正文与逐句分析区 -->
+        <div id="article-container" class="space-y-4">
+
+            <div class="sentence-card" onclick="speak('さとうさん、おつかれさまでした。これから まっすぐ かえりますか。', event)">
+                <div class="flex justify-between items-start">
+                    <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
+                        <span class="role-badge role-li">李</span><br>
+                        1. <ruby>佐藤<rt>さとう</rt></ruby>さん、<span class="grammar-highlight">お<ruby>疲<rt>つか</rt>
+                                </ruby>れ<ruby>様<rt>さま</rt></ruby>でした</span>。これから <span
+                            class="grammar-highlight">まっすぐ</span> <ruby>帰<rt>かえ</rt></ruby>りますか。
+                    </div>
+                    <button class="text-purple-500 hover:text-purple-700 p-2 shrink-0" title="朗读句子"><i
+                            class="fa-solid fa-volume-high"></i></button>
+                </div>
+                <div class="cn-text text-slate-500 mt-2 font-medium">
+                    佐藤，您辛苦了。接下来直接回家吗？
+                </div>
+                <div class="analysis-box">
+                    <strong>📍 客观解析：</strong><br>
+                    ① <code>お疲れ様でした</code>：日本职场必备的万能交际语，用于同事下班或工作告一段落时的互相慰劳。<br>
+                    ② <code>まっすぐ</code>：副词，意为“笔直、直接”，在此处修饰动词「帰ります」，表示下班后不绕道去别处，直接回家。
+                </div>
+            </div>
+
+            <div class="sentence-card" onclick="speak('おつかれさまでした。はい、あぱーとまで あるいて かえります。', event)">
+                <div class="flex justify-between items-start">
+                    <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
+                        <span class="role-badge role-sato">佐藤</span><br>
+                        2. お<ruby>疲<rt>つか</rt></ruby>れ<ruby>様<rt>さま</rt></ruby>でした。はい、アパートまで <span
+                            class="grammar-highlight"><ruby>歩<rt>ある</rt></ruby>いて</span> <ruby>帰<rt>かえ</rt></ruby>ります。
+                    </div>
+                    <button class="text-purple-500 hover:text-purple-700 p-2 shrink-0" title="朗读句子"><i
+                            class="fa-solid fa-volume-high"></i></button>
+                </div>
+                <div class="cn-text text-slate-500 mt-2 font-medium">
+                    您也辛苦了。是的，我走回公寓。
+                </div>
+                <div class="analysis-box border-l-rose-500">
+                    <strong>🚫 致命陷阱预警：</strong><br>
+                    ①
+                    <code>歩いて</code>：动词「歩く」的て形，表示动作状态（步行）。**客观严禁**在此处叠加强加表示交通工具的助词「で」（不可造出「<del>歩きで</del>」这样的错误表达）。<br>
+                    ② <code>まで</code>：提示空间移动的终点。
+                </div>
+            </div>
+
+            <div class="sentence-card" onclick="speak('あるいて ですか。それは たいへんですね。', event)">
+                <div class="flex justify-between items-start">
+                    <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
+                        <span class="role-badge role-li">李</span><br>
+                        3. <ruby>歩<rt>ある</rt></ruby>いてですか。それは <span class="grammar-highlight"><ruby>大変<rt>たいへん</rt>
+                                </ruby>ですね</span>。
+                    </div>
+                    <button class="text-purple-500 hover:text-purple-700 p-2 shrink-0" title="朗读句子"><i
+                            class="fa-solid fa-volume-high"></i></button>
+                </div>
+                <div class="cn-text text-slate-500 mt-2 font-medium">
+                    走回去吗？那可真够呛呢。
+                </div>
+                <div class="analysis-box">
+                    <strong>📍 客观解析：</strong><br>
+                    ① <code>大変ですね</code>：对他人耗费体力、遭遇困难表示同情与理解的套话。<br>
+                    ② 句末的 <code>ね</code> 为终助词，主要功能是寻求对方的共鸣。
+                </div>
+            </div>
+
+            <div class="sentence-card" onclick="speak('ええ。たしか、りさんは あした ふらんすじんの ともだちと いっしょに はこねへ いきますね。', event)">
+                <div class="flex justify-between items-start">
+                    <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
+                        <span class="role-badge role-sato">佐藤</span><br>
+                        4. ええ。<span class="grammar-highlight">たしか</span>、李さんは <ruby>明日<rt>あした</rt></ruby> フランス<ruby>人
+                            <rt>じん</rt></ruby>の <ruby>友達<rt>ともだち</rt></ruby><span class="grammar-highlight">と 一緒に</span>
+                        <ruby>箱根<rt>はこね</rt></ruby>へ <ruby>行<rt>い</rt></ruby>きますね。
+                    </div>
+                    <button class="text-purple-500 hover:text-purple-700 p-2 shrink-0" title="朗读句子"><i
+                            class="fa-solid fa-volume-high"></i></button>
+                </div>
+                <div class="cn-text text-slate-500 mt-2 font-medium">
+                    是的。我记得，小李你明天要和法国朋友一起去箱根吧。
+                </div>
+                <div class="analysis-box">
+                    <strong>📍 客观解析：</strong><br>
+                    ① <code>たしか</code>：副词，用于凭记忆进行的不确定推断，译为“大概、记得”。<br>
+                    ② <code>フランス人</code>：国名直接加「人（じん）」表示该国国籍。<br>
+                    ③ <code>と 一緒に</code>：提示伴随者。口语中副词「一緒に」常被省略。<br>
+                    ④ <code>箱根（はこね）</code>：东京周边的著名温泉胜地。
+                </div>
+            </div>
+
+            <div class="sentence-card" onclick="speak('はい、しんじゅくから でんしゃで いきます。じゃあ、おさきに しつれいします。', event)">
+                <div class="flex justify-between items-start">
+                    <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
+                        <span class="role-badge role-li">李</span><br>
+                        5. はい、<ruby>新宿<rt>しんじゅく</rt></ruby>から <ruby>電車<rt>でんしゃ</rt></ruby>で <ruby>行<rt>い</rt>
+                            </ruby>きます。じゃあ、<span class="grammar-highlight">お<ruby>先<rt>さき</rt></ruby>に <ruby>失礼<rt>しつれい
+                                </rt></ruby>します</span>。
+                    </div>
+                    <button class="text-purple-500 hover:text-purple-700 p-2 shrink-0" title="朗读句子"><i
+                            class="fa-solid fa-volume-high"></i></button>
+                </div>
+                <div class="cn-text text-slate-500 mt-2 font-medium">
+                    是的，从新宿坐电车去。那么，我先告辞了。
+                </div>
+                <div class="analysis-box">
+                    <strong>📍 客观解析：</strong><br>
+                    ① <code>新宿（しんじゅく）から</code>：提示移动的空间起点。<br>
+                    ② <code>電車で</code>：「で」提示交通手段。注意如果询问交通工具「何で」，发音必须是「なんで」。<br>
+                    ③ <code>お先に失礼します</code>：日本职场基本礼仪，比同事先离开办公室时的必备客套话。
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="text-center text-slate-400 text-sm mt-12 pb-8">
+        <p>第六课 课文背诵特训 2/4</p>
+        <div class="footnote text-left max-w-4xl mx-auto px-4 mt-4">
+            <strong>Sources & Rationale:</strong><br>
+            本课文为结合《新版中日交流标准日本语 初级 上册》第6课知识点编写的原创新对话。
+            语法点（歩いて、で、と、へ）的解析均遵循日本文部科学省国语文法规范。职场寒暄语的语境适用性基于现代日本企业文化常识。
+        </div>
+    </footer>
+
+    <!-- 交互逻辑 -->
+    <script>
+        // 语音合成
+        const sentences = [
+            "さとうさん、おつかれさまでした。これから まっすぐ かえりますか。",
+            "おつかれさまでした。はい、あぱーとまで あるいて かえります。",
+            "あるいて ですか。それは たいへんですね。",
+            "ええ。たしか、りさんは あした ふらんすじんの ともだちと いっしょに はこねへ いきますね。",
+            "はい、しんじゅくから でんしゃで いきます。じゃあ、おさきに しつれいします。"
+        ];
+
+        function speak(text, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            if (!window.speechSynthesis) {
+                alert('您的浏览器不支持语音合成功能！');
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ja-JP';
+            utterance.rate = 0.85;
+
+            const voices = window.speechSynthesis.getVoices();
+            const msVoice = voices.find(v => v.lang.includes('ja') && v.name.includes('Microsoft'));
+            const jpVoice = voices.find(v => v.lang.includes('ja'));
+            if (msVoice) utterance.voice = msVoice;
+            else if (jpVoice) utterance.voice = jpVoice;
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        async function playAll() {
+            for (let sentence of sentences) {
+                speak(sentence);
+                await new Promise(resolve => setTimeout(resolve, sentence.length * 150 + 1000));
+            }
+        }
+
+        window.speechSynthesis.onvoiceschanged = function () {
+            window.speechSynthesis.getVoices();
+        };
+
+        // 状态切换：隐藏中文/假名/解析
+        let isRubyHidden = false;
+        let isCnHidden = false;
+        let isAnalysisHidden = false;
+
+        document.getElementById('toggleRubyBtn').addEventListener('click', function (e) {
+            isRubyHidden = !isRubyHidden;
+            if (isRubyHidden) {
+                document.body.classList.add('hide-ruby');
+                this.innerHTML = '<i class="fa-solid fa-spell-check mr-1"></i> 显示假名';
+                this.classList.replace('bg-slate-100', 'bg-purple-100');
+                this.classList.replace('text-slate-600', 'text-purple-700');
+            } else {
+                document.body.classList.remove('hide-ruby');
+                this.innerHTML = '<i class="fa-solid fa-spell-check mr-1"></i> 隐藏假名';
+                this.classList.replace('bg-purple-100', 'bg-slate-100');
+                this.classList.replace('text-purple-700', 'text-slate-600');
+            }
+        });
+
+        document.getElementById('toggleCnBtn').addEventListener('click', function (e) {
+            isCnHidden = !isCnHidden;
+            if (isCnHidden) {
+                document.body.classList.add('hide-cn');
+                this.innerHTML = '<i class="fa-solid fa-eye mr-1"></i> 显示中文';
+                this.classList.replace('bg-slate-100', 'bg-purple-100');
+                this.classList.replace('text-slate-600', 'text-purple-700');
+            } else {
+                document.body.classList.remove('hide-cn');
+                this.innerHTML = '<i class="fa-solid fa-eye-slash mr-1"></i> 隐藏中文';
+                this.classList.replace('bg-purple-100', 'bg-slate-100');
+                this.classList.replace('text-purple-700', 'text-slate-600');
+            }
+        });
+
+        document.getElementById('toggleAnalysisBtn').addEventListener('click', function (e) {
+            isAnalysisHidden = !isAnalysisHidden;
+            if (isAnalysisHidden) {
+                document.body.classList.add('hide-analysis');
+                this.innerHTML = '<i class="fa-solid fa-microscope mr-1"></i> 显示解析';
+                this.classList.replace('bg-slate-100', 'bg-purple-100');
+                this.classList.replace('text-slate-600', 'text-purple-700');
+            } else {
+                document.body.classList.remove('hide-analysis');
+                this.innerHTML = '<i class="fa-solid fa-microscope mr-1"></i> 隐藏解析';
+                this.classList.replace('bg-purple-100', 'bg-slate-100');
+                this.classList.replace('text-purple-700', 'text-slate-600');
+            }
+        });
+
+        // 阻止解析框点击冒泡
+        document.querySelectorAll('.analysis-box').forEach(el => {
+            el.addEventListener('click', e => e.stopPropagation());
+        });
+    </script>
+</body>
+
+</html>
