@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第六课 Part 2 互动词汇卡</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8B5CF6;
+            --secondary: #EC4899;
+            --background: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: var(--background);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .deck-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1000px;
+            padding-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .card.active {
+            border-color: var(--secondary);
+            background: rgba(45, 55, 72, 0.8);
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .jp-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.02em;
+        }
+
+        .cn-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .play-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 1;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+
+        .card:hover .play-btn {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+            transform: scale(1.05);
+        }
+
+        .play-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+            margin-left: 3px;
+        }
+
+        .card.playing .play-btn {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.6);
+            transform: scale(1.1);
+            animation: pulse 1.5s infinite;
+        }
+
+        .card.playing .play-btn svg {
+            fill: #fff;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(236, 72, 153, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(236, 72, 153, 0);
+            }
+        }
+
+        .category-title {
+            grid-column: 1 / -1;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--card-border);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Scrollbar aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 600px) {
+            .deck-container {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.6rem;
+            }
+
+            body {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>交互点读词卡</h1>
+        <p>第 6 课学习讲义 Part 2 · 点击卡片即可听取日文发音，包含高阶地名及职场高频惯用语。</p>
+    </div>
+
+    <div class="deck-container" id="deck">
+        <!-- Cards injected via JS -->
+    </div>
+
+    <script>
+        const audioUrlBase = "https://tiexiang0-alt.github.io/ransport-policy-handbook/jp_lesson_6_part2_quiz/audio/audio_";
+        const items = [
+            { category: "核心主题", jp: "わたしは来週銀座へ行きます。", cn: "核心导语句子", id: 0 },
+            { category: "国家与地区", jp: "アメリカ", cn: "美国", id: 1 },
+            { category: "国家与地区", jp: "韓国（かんこく）", cn: "韩国", id: 2 },
+            { category: "国家与地区", jp: "フランス", cn: "法国", id: 3 },
+            { category: "国家与地区", jp: "フランス人", cn: "法国人", id: 4 },
+            { category: "国家与地区", jp: "北京（ぺきん）", cn: "北京", id: 5 },
+            { category: "国家与地区", jp: "広島（ひろしま）", cn: "广岛", id: 6 },
+            { category: "国家与地区", jp: "北海道（ほっかいどう）", cn: "北海道", id: 7 },
+            { category: "云游日本", jp: "京都（きょうと）", cn: "日本古都", id: 8 },
+            { category: "云游日本", jp: "箱根（はこね）", cn: "温泉之乡", id: 9 },
+            { category: "云游日本", jp: "銀座（ぎんざ）", cn: "世界级购物街区", id: 10 },
+            { category: "云游日本", jp: "渋谷（しぶや）", cn: "年轻人流行文化发源地", id: 11 },
+            { category: "云游日本", jp: "新宿（しんじゅく）", cn: "东京核心 CBD", id: 12 },
+            { category: "高频副词", jp: "たしか", cn: "确实...、大概...", id: 13 },
+            { category: "高频副词", jp: "まっすぐ", cn: "笔直、直接", id: 14 },
+            { category: "高频副词", jp: "一緒に（いっしょに）", cn: "一起", id: 15 },
+            { category: "高频副词", jp: "友達と一緒に行きます", cn: "和朋友一起去", id: 16 },
+            { category: "高频副词", jp: "佐藤（さとう）", cn: "佐藤 (注意长音)", id: 17 },
+            { category: "职场寒暄", jp: "お疲れ様でした", cn: "您辛苦了 / 职场万能慰问语", id: 18 },
+            { category: "职场寒暄", jp: "お先に失礼します", cn: "我先告辞了 / 离开办公室套话", id: 19 },
+            { category: "职场寒暄", jp: "大変ですね", cn: "真够呛、糟糕、不好了", id: 20 },
+            { category: "陷阱词提醒", jp: "歩いて（あるいて）", cn: "步行 (切忌加「で」)", id: 21 },
+        ];
+
+        const deck = document.getElementById("deck");
+        let currentAudio = null;
+        let currentPlayingCard = null;
+
+        // Group items by category
+        let lastCategory = "";
+        items.forEach(item => {
+            if (item.category !== lastCategory) {
+                const title = document.createElement("div");
+                title.className = "category-title";
+                title.innerText = item.category;
+                deck.appendChild(title);
+                lastCategory = item.category;
+            }
+
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+                <div class="card-content">
+                    <div class="jp-text">${item.jp}</div>
+                    <div class="cn-text">${item.cn}</div>
+                </div>
+                <div class="play-btn">
+                    <!-- SVG Play Icon -->
+                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+            `;
+
+            const audioSrc = `${audioUrlBase}${item.id}.mp3`;
+            const audioObj = new Audio(audioSrc);
+
+            audioObj.onended = () => {
+                card.classList.remove("playing");
+            };
+
+            card.addEventListener("click", () => {
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                }
+                if (currentPlayingCard) {
+                    currentPlayingCard.classList.remove("playing");
+                }
+
+                audioObj.play();
+                card.classList.add("playing");
+                currentAudio = audioObj;
+                currentPlayingCard = card;
+            });
+
+            deck.appendChild(card);
+        });
+    </script>
+</body>
+
+</html>
