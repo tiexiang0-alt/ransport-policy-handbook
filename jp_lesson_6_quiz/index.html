@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「第六課」日语核心考点突击</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <div class="glass-panel text-center">
+                <span class="badge">Part 1</span>
+                <h1>第六課 核心考点实战测验</h1>
+                <p>互动复习 • 30道精选题目 • 语法词汇全覆盖</p>
+                <div class="features">
+                    <div class="feature"><span>🎯</span> 15道 单选题</div>
+                    <div class="feature"><span>✅</span> 5道 判断题</div>
+                    <div class="feature"><span>✍️</span> 5道 填空题</div>
+                    <div class="feature"><span>🌟</span> 5道 多选题</div>
+                </div>
+                <button id="start-btn" class="primary-btn">开始挑战</button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen">
+            <div class="header">
+                <div class="progress-container">
+                    <div id="progress-text">1 / 30</div>
+                    <div class="progress-bar">
+                        <div id="progress-fill"></div>
+                    </div>
+                </div>
+                <div id="score-display">得分: 0</div>
+            </div>
+
+            <div class="glass-panel question-panel">
+                <div class="question-header">
+                    <div id="question-type-badge" class="badge">单选题</div>
+                </div>
+                <h2 id="question-text">问题内容</h2>
+
+                <div id="options-container" class="options-grid">
+                    <!-- Options injected via JS -->
+                </div>
+                <div id="input-container" class="hidden">
+                    <input type="text" id="answer-input" placeholder="输入你的答案，按回车提交" autocomplete="off">
+                </div>
+
+                <div class="actions">
+                    <button id="submit-btn" class="primary-btn hidden">确认提交</button>
+                    <button id="next-btn" class="secondary-btn hidden">下一题 ➡️</button>
+                </div>
+
+                <div id="feedback-message" class="feedback hidden">
+                    <div class="feedback-icon" id="feedback-icon"></div>
+                    <div class="feedback-text" id="feedback-text"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen">
+            <div class="glass-panel text-center">
+                <h2>🎉 测试完毕！</h2>
+                <div class="final-score">
+                    <span id="final-score-val">100</span> 分
+                </div>
+                <p id="result-message">太棒了，你完全掌握了本课精华！</p>
+                <p class="github-notice">部署状态：已针对 GitHub Pages 优化 🚀</p>
+                <div class="result-actions">
+                    <button id="restart-btn" class="primary-btn">再测一次</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

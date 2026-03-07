@@ -1,0 +1,249 @@
+:root {
+    --primary: #5e60ce;
+    --primary-hover: #4ea8de;
+    --secondary: #6930c3;
+    --success: #06d6a0;
+    --error: #ef476f;
+    --text-primary: #f8f9fa;
+    --text-secondary: #e9ecef;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', 'Noto Sans JP', 'Noto Sans SC', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+#app {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    position: relative;
+    min-height: 600px;
+}
+
+.screen {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease;
+    transform: translateY(20px);
+    width: 100%;
+}
+
+.screen.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: var(--glass-shadow);
+}
+
+.text-center { text-align: center; }
+
+h1 { font-size: 2.2rem; margin: 15px 0; font-weight: 800; letter-spacing: -0.5px; }
+h2 { font-size: 1.5rem; margin-bottom: 25px; line-height: 1.4; }
+p { color: var(--text-secondary); margin-bottom: 30px; font-size: 1.1rem; }
+
+.badge {
+    display: inline-block;
+    background: linear-gradient(90deg, #ec008c, #fc6767);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(236, 0, 140, 0.4);
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.feature {
+    background: rgba(255,255,255,0.05);
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.primary-btn {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 14px 40px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(105, 48, 195, 0.4);
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(105, 48, 195, 0.6);
+    background: linear-gradient(45deg, var(--primary-hover), var(--primary));
+}
+
+.secondary-btn {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    padding: 12px 30px;
+    font-size: 1rem;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.secondary-btn:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* Quiz UI */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.progress-container { width: 70%; }
+#progress-text { font-size: 0.9rem; margin-bottom: 8px; font-weight: 600; letter-spacing: 1px;}
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+#progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    width: 0%;
+    transition: width 0.4s ease;
+    border-radius: 10px;
+}
+#score-display { font-weight: 800; font-size: 1.2rem; background: rgba(0,0,0,0.3); padding: 8px 16px; border-radius: 20px; }
+
+.question-header { margin-bottom: 15px; }
+
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.option-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-primary);
+    padding: 16px 20px;
+    border-radius: 14px;
+    text-align: left;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.option-btn:hover:not(.disabled) {
+    background: rgba(255,255,255,0.15);
+    transform: translateX(5px);
+}
+
+.option-btn.selected {
+    background: rgba(94, 96, 206, 0.4);
+    border-color: var(--primary);
+}
+
+.option-btn.correct {
+    background: rgba(6, 214, 160, 0.2);
+    border-color: var(--success);
+    color: #06d6a0;
+}
+
+.option-btn.wrong {
+    background: rgba(239, 71, 111, 0.2);
+    border-color: var(--error);
+    color: #ef476f;
+}
+
+.option-btn.disabled { cursor: not-allowed; opacity: 0.8; }
+
+#input-container { margin-bottom: 25px; }
+#answer-input {
+    width: 100%;
+    background: rgba(0,0,0,0.2);
+    border: 2px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 16px 20px;
+    border-radius: 14px;
+    font-size: 1.1rem;
+    font-family: inherit;
+    transition: all 0.3s;
+}
+#answer-input:focus {
+    outline: none;
+    border-color: var(--primary-hover);
+    background: rgba(0,0,0,0.4);
+}
+
+.actions { display: flex; justify-content: flex-end; gap: 15px; }
+.hidden { display: none !important; }
+
+.feedback {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 14px;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    animation: fadeIn 0.4s ease;
+}
+
+.feedback.success { background: rgba(6, 214, 160, 0.15); border-left: 4px solid var(--success); }
+.feedback.error { background: rgba(239, 71, 111, 0.15); border-left: 4px solid var(--error); }
+
+.final-score { font-size: 4rem; font-weight: 800; margin: 20px 0; background: -webkit-linear-gradient(45deg, #f3ec78, #af4261); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.github-notice { font-size: 0.9rem; color: #aaa; margin: 40px 0 10px; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 600px) {
+    .glass-panel { padding: 25px 20px; }
+    h1 { font-size: 1.8rem; }
+    .primary-btn { width: 100%; }
+}
