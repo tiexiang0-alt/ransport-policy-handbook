@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第六课 Part 2 随堂测验 (30题精华版)</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="glass-container" id="main-container">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <h1 class="title-jp">第六課 小テスト Part 2</h1>
+            <h2 class="subtitle">全面自测：地名常识与职场寒暄词 🚀</h2>
+            <div class="stats-box">
+                <p>🔹 题量：<strong>30 道精华题</strong> (涵盖常识、发音与词汇)</p>
+                <p>🔹 题型：单选 / 判断 / 填空 / 多选</p>
+                <p>🔹 目标：直击易错陷阱，强化日常及商务语境</p>
+            </div>
+            <button id="start-btn" class="primary-btn pulse-glow">开始挑战</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <span id="progress-text" class="progress-info">第 x 题 / 共 30 题</span>
+                <span id="score-display" class="score-badge">得分: 0</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question-container">
+                <div id="question-type-badge" class="type-badge">单选题</div>
+                <h2 id="question-text" class="question-text">问题加载中...</h2>
+                <div id="options-container" class="options-grid"></div>
+                <div id="input-container" class="input-wrap hidden">
+                    <input type="text" id="answer-input" placeholder="点击此处输入您的答案..." autocomplete="off">
+                </div>
+            </div>
+            <div id="feedback-message" class="feedback hidden">
+                <span id="feedback-icon" class="fb-icon"></span>
+                <p id="feedback-text"></p>
+            </div>
+            <div class="action-bar">
+                <button id="submit-btn" class="primary-btn">确认提交</button>
+                <button id="next-btn" class="secondary-btn hidden">下一题 ➡️</button>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen">
+            <h1 class="result-title">🎯 您的最终成绩</h1>
+            <div class="final-score-circle">
+                <span id="final-score-val">0</span>
+                <span class="score-unit">分</span>
+            </div>
+            <p id="result-message" class="result-feedback">分析中...</p>
+            <button id="restart-btn" class="primary-btn restart">🔁 重新刷题</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
