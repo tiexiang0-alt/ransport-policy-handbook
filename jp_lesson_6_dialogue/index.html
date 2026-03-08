@@ -98,6 +98,26 @@
             margin-bottom: 0.5rem;
         }
 
+        .sentence-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .sentence-card:hover .sentence-img {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 640px) {
+            .sentence-img {
+                height: 160px;
+            }
+        }
+
         .role-li {
             background-color: #e0e7ff;
             color: #3730a3;
@@ -180,6 +200,7 @@
         <div id="article-container" class="space-y-4">
 
             <div class="sentence-card" onclick="speak(0, event)">
+                <img src="./assets/sentence_0.jpg" alt="Office late night" class="sentence-img">
                 <div class="flex justify-between items-start">
                     <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
                         <span class="role-badge role-li">李</span><br>
@@ -201,6 +222,7 @@
             </div>
 
             <div class="sentence-card" onclick="speak(1, event)">
+                <img src="./assets/sentence_1.jpg" alt="Walking home" class="sentence-img">
                 <div class="flex justify-between items-start">
                     <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
                         <span class="role-badge role-sato">佐藤</span><br>
@@ -222,10 +244,11 @@
             </div>
 
             <div class="sentence-card" onclick="speak(2, event)">
+                <img src="./assets/sentence_2.jpg" alt="Tiredness" class="sentence-img">
                 <div class="flex justify-between items-start">
                     <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
                         <span class="role-badge role-li">李</span><br>
-                        3. <ruby>歩<rt>ある</rt></ruby>いてですか。それは <span class="grammar-highlight"><ruby>大変<rt>たいへん</rt>
+                        3. <ruby>歩<rt>ある</rt></ruby>いてですか。那是 <span class="grammar-highlight"><ruby>大変<rt>たいへん</rt>
                             </ruby>ですね</span>。
                     </div>
                     <button class="text-purple-500 hover:text-purple-700 p-2 shrink-0" title="朗读句子"><i
@@ -242,6 +265,7 @@
             </div>
 
             <div class="sentence-card" onclick="speak(3, event)">
+                <img src="./assets/sentence_3.jpg" alt="Hakone" class="sentence-img">
                 <div class="flex justify-between items-start">
                     <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
                         <span class="role-badge role-sato">佐藤</span><br>
@@ -266,6 +290,7 @@
             </div>
 
             <div class="sentence-card" onclick="speak(4, event)">
+                <img src="./assets/sentence_4.jpg" alt="Shinjuku Station" class="sentence-img">
                 <div class="flex justify-between items-start">
                     <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
                         <span class="role-badge role-li">李</span><br>
