@@ -288,11 +288,11 @@
     <!-- 交互逻辑 -->
     <script>
         const audioFiles = [
-            "./audio/audio_0.mp3?v=2",
-            "./audio/audio_1.mp3?v=2",
-            "./audio/audio_2.mp3?v=2",
-            "./audio/audio_3.mp3?v=2",
-            "./audio/audio_4.mp3?v=2"
+            "./audio/audio_0.mp3?v=6",
+            "./audio/audio_1.mp3?v=6",
+            "./audio/audio_2.mp3?v=6",
+            "./audio/audio_3.mp3?v=6",
+            "./audio/audio_4.mp3?v=6"
         ];
 
         // 预加载
@@ -329,9 +329,8 @@
                     if (!currentAudio) { resolve(); return; }
                     currentAudio.onended = resolve;
                     // 超时保障
-                    setTimeout(resolve, 8000);
                 });
-                await new Promise(resolve => setTimeout(resolve, 800)); // 句子间隔
+                await new Promise(resolve => setTimeout(resolve, 200)); // 取消冗长的延时，加快连贯度
             }
         }
 
