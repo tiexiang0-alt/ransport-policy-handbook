@@ -164,13 +164,13 @@
         <!-- 课文正文与逐句分析区 -->
         <div id="article-container" class="space-y-4">
 
-            <div class="sentence-card" onclick="speak('さとうさん、おつかれさまでした。これから まっすぐ かえりますか。', event)">
+            <div class="sentence-card" onclick="speak(0, event)">
                 <div class="flex justify-between items-start">
                     <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
                         <span class="role-badge role-li">李</span><br>
                         1. <ruby>佐藤<rt>さとう</rt></ruby>さん、<span class="grammar-highlight">お<ruby>疲<rt>つか</rt>
-                                </ruby>れ<ruby>様<rt>さま</rt></ruby>でした</span>。これから <span
-                            class="grammar-highlight">まっすぐ</span> <ruby>帰<rt>かえ</rt></ruby>りますか。
+                            </ruby>れ<ruby>様<rt>さま</rt></ruby>でした</span>。これから <span class="grammar-highlight">まっすぐ</span>
+                        <ruby>帰<rt>かえ</rt></ruby>りますか。
                     </div>
                     <button class="text-purple-500 hover:text-purple-700 p-2 shrink-0" title="朗读句子"><i
                             class="fa-solid fa-volume-high"></i></button>
@@ -185,7 +185,7 @@
                 </div>
             </div>
 
-            <div class="sentence-card" onclick="speak('おつかれさまでした。はい、あぱーとまで あるいて かえります。', event)">
+            <div class="sentence-card" onclick="speak(1, event)">
                 <div class="flex justify-between items-start">
                     <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
                         <span class="role-badge role-sato">佐藤</span><br>
@@ -206,12 +206,12 @@
                 </div>
             </div>
 
-            <div class="sentence-card" onclick="speak('あるいて ですか。それは たいへんですね。', event)">
+            <div class="sentence-card" onclick="speak(2, event)">
                 <div class="flex justify-between items-start">
                     <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
                         <span class="role-badge role-li">李</span><br>
                         3. <ruby>歩<rt>ある</rt></ruby>いてですか。それは <span class="grammar-highlight"><ruby>大変<rt>たいへん</rt>
-                                </ruby>ですね</span>。
+                            </ruby>ですね</span>。
                     </div>
                     <button class="text-purple-500 hover:text-purple-700 p-2 shrink-0" title="朗读句子"><i
                             class="fa-solid fa-volume-high"></i></button>
@@ -226,12 +226,13 @@
                 </div>
             </div>
 
-            <div class="sentence-card" onclick="speak('ええ。たしか、りさんは あした ふらんすじんの ともだちと いっしょに はこねへ いきますね。', event)">
+            <div class="sentence-card" onclick="speak(3, event)">
                 <div class="flex justify-between items-start">
                     <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
                         <span class="role-badge role-sato">佐藤</span><br>
                         4. ええ。<span class="grammar-highlight">たしか</span>、李さんは <ruby>明日<rt>あした</rt></ruby> フランス<ruby>人
-                            <rt>じん</rt></ruby>の <ruby>友達<rt>ともだち</rt></ruby><span class="grammar-highlight">と 一緒に</span>
+                            <rt>じん</rt>
+                        </ruby>の <ruby>友達<rt>ともだち</rt></ruby><span class="grammar-highlight">と 一緒に</span>
                         <ruby>箱根<rt>はこね</rt></ruby>へ <ruby>行<rt>い</rt></ruby>きますね。
                     </div>
                     <button class="text-purple-500 hover:text-purple-700 p-2 shrink-0" title="朗读句子"><i
@@ -249,12 +250,12 @@
                 </div>
             </div>
 
-            <div class="sentence-card" onclick="speak('はい、しんじゅくから でんしゃで いきます。じゃあ、おさきに しつれいします。', event)">
+            <div class="sentence-card" onclick="speak(4, event)">
                 <div class="flex justify-between items-start">
                     <div class="font-['Noto_Sans_JP'] font-bold text-slate-800 leading-loose">
                         <span class="role-badge role-li">李</span><br>
                         5. はい、<ruby>新宿<rt>しんじゅく</rt></ruby>から <ruby>電車<rt>でんしゃ</rt></ruby>で <ruby>行<rt>い</rt>
-                            </ruby>きます。じゃあ、<span class="grammar-highlight">お<ruby>先<rt>さき</rt></ruby>に <ruby>失礼<rt>しつれい
+                        </ruby>きます。じゃあ、<span class="grammar-highlight">お<ruby>先<rt>さき</rt></ruby>に <ruby>失礼<rt>しつれい
                                 </rt></ruby>します</span>。
                     </div>
                     <button class="text-purple-500 hover:text-purple-700 p-2 shrink-0" title="朗读句子"><i
@@ -286,47 +287,54 @@
 
     <!-- 交互逻辑 -->
     <script>
-        // 语音合成
-        const sentences = [
-            "さとうさん、おつかれさまでした。これから まっすぐ かえりますか。",
-            "おつかれさまでした。はい、あぱーとまで あるいて かえります。",
-            "あるいて ですか。それは たいへんですね。",
-            "ええ。たしか、りさんは あした ふらんすじんの ともだちと いっしょに はこねへ いきますね。",
-            "はい、しんじゅくから でんしゃで いきます。じゃあ、おさきに しつれいします。"
+        const audioFiles = [
+            "./audio/audio_0.mp3",
+            "./audio/audio_1.mp3",
+            "./audio/audio_2.mp3",
+            "./audio/audio_3.mp3",
+            "./audio/audio_4.mp3"
         ];
 
-        function speak(text, event) {
+        // 预加载
+        audioFiles.forEach(file => {
+            new Audio(file).load();
+        });
+
+        let currentAudio = null;
+
+        function speak(index, event) {
             if (event) {
                 event.stopPropagation();
             }
-            if (!window.speechSynthesis) {
-                alert('您的浏览器不支持语音合成功能！');
-                return;
+
+            // 停止当前正在播放的声音
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
             }
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'ja-JP';
-            utterance.rate = 0.85;
 
-            const voices = window.speechSynthesis.getVoices();
-            const msVoice = voices.find(v => v.lang.includes('ja') && v.name.includes('Microsoft'));
-            const jpVoice = voices.find(v => v.lang.includes('ja'));
-            if (msVoice) utterance.voice = msVoice;
-            else if (jpVoice) utterance.voice = jpVoice;
-
-            window.speechSynthesis.speak(utterance);
+            // 播放指定的音频
+            const audioPath = audioFiles[index];
+            currentAudio = new Audio(audioPath);
+            currentAudio.play().catch(e => {
+                console.error('播放失败:', e);
+            });
         }
 
         async function playAll() {
-            for (let sentence of sentences) {
-                speak(sentence);
-                await new Promise(resolve => setTimeout(resolve, sentence.length * 150 + 1000));
+            for (let i = 0; i < audioFiles.length; i++) {
+                speak(i);
+                // 等待音频播放完毕
+                await new Promise(resolve => {
+                    if (!currentAudio) { resolve(); return; }
+                    currentAudio.onended = resolve;
+                    // 超时保障
+                    setTimeout(resolve, 8000);
+                });
+                await new Promise(resolve => setTimeout(resolve, 800)); // 句子间隔
             }
         }
 
-        window.speechSynthesis.onvoiceschanged = function () {
-            window.speechSynthesis.getVoices();
-        };
 
         // 状态切换：隐藏中文/假名/解析
         let isRubyHidden = false;
